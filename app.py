@@ -8,7 +8,7 @@ if st.session_state.username is None:
         	name = st.text_input("Enter your name:")
         	submitted = st.form_submit_button("Submit")
         	if submitted and name:
-            	st.session_state.username = name
+                st.session_state.username = name
             	st.rerun()
 else:
-    	st.title(f"Welcome, {st.session_state.username}!")
+    	st.title(f"Welcome, {st.session_state.username}!")rz
