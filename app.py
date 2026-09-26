@@ -1,4 +1,4 @@
 import streamlit as st
 
-if st.button("Test"):
-	st.write("Test")
+username = st.text_input("Enter your name: ")
+st.title(f"Welcome, {username}!")
