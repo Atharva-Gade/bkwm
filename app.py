@@ -1,5 +1,11 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="bkwm",
+    page_icon="bkwmfavicon.jpg",
+    layout="centered"
+)
+
 if "username" not in st.session_state:
     st.session_state.username = None
 
