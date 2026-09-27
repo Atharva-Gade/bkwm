@@ -17,4 +17,13 @@ if st.session_state.username is None:
             st.session_state.username = name
             st.rerun()
 else:
-    st.title(f"Welcome, {st.session_state.username}!")
+    st.subheader("📚 bkwm")
+    st.write("Let's find your next book!")
+
+    genre = st.selectbox(
+        "Pick a genre you like:",
+        ["Fantasy", "Mystery", "Romance", "Sci-Fi", "Horror", "Non-fiction"]
+    )
+
+    if st.button("Suggest a book"):
+        st.success(f"Great! We'll find you a {genre} book soon 📖")
