@@ -18,7 +18,7 @@ if st.session_state.username is None:
             st.rerun()
 else:
     st.subheader("📚 bkwm")
-    st.write(f"Welcome, {st.session_state.username}!")
+    st.markdown(f"#### Welcome, {st.session_state.username}!")
     st.write("Let's find your next book!")
 
     genre = st.selectbox(
