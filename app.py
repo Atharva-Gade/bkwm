@@ -1,5 +1,4 @@
 import streamlit as st
-import requests
 import random
 
 st.set_page_config(
@@ -7,6 +6,51 @@ st.set_page_config(
     page_icon="bkwmfavicon.jpg",
     layout="centered"
 )
+
+books_data = {
+    "Fantasy": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+    "Mystery": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+    "Romance": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+    "Sci-Fi": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+    "Horror": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+    "Non-fiction": [
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+        {"title": "", "author": "", "description": ""},
+    ],
+}
 
 if "username" not in st.session_state:
     st.session_state.username = None
@@ -29,33 +73,12 @@ else:
     )
 
     if st.button("Suggest a book"):
-        url = "https://www.googleapis.com/books/v1/volumes"
-        params = {
-            "q": f"subject:{genre}",
-            "maxResults": 20
-        }
-        response = requests.get(url, params=params)
-        st.write("Status code:", response.status_code)
-        st.write(response.json())
-        data = response.json()
+        book = random.choice(books_data[genre])
 
-        if "items" in data and len(data["items"]) > 0:
-            book = random.choice(data["items"])
-            info = book["volumeInfo"]
-
-            title = info.get("title", "Unknown Title")
-            authors = ", ".join(info.get("authors", ["Unknown Author"]))
-            description = info.get("description", "No description available.")
-            thumbnail = info.get("imageLinks", {}).get("thumbnail", None)
-
+        if book["title"]:
             st.markdown("---")
-            col1, col2 = st.columns([1, 2])
-            with col1:
-                if thumbnail:
-                    st.image(thumbnail, use_container_width=True)
-            with col2:
-                st.markdown(f"**{title}**")
-                st.write(f"by {authors}")
-                st.caption(description[:200] + "..." if len(description) > 200 else description)
+            st.markdown(f"**{book['title']}**")
+            st.write(f"by {book['author']}")
+            st.caption(book["description"])
         else:
-            st.error("Couldn't find a book for that genre, try another one.")
+            st.warning("No books added for this genre yet!")
