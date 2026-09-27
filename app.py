@@ -1,4 +1,6 @@
 import streamlit as st
+import requests
+import random
 
 st.set_page_config(
     page_title="bkwm",
@@ -27,4 +29,31 @@ else:
     )
 
     if st.button("Suggest a book"):
-        st.success(f"Great! We'll find you a {genre} book soon 📖")
+        url = "https://www.googleapis.com/books/v1/volumes"
+        params = {
+            "q": f"subject:{genre}",
+            "maxResults": 20
+        }
+        response = requests.get(url, params=params)
+        data = response.json()
+
+        if "items" in data and len(data["items"]) > 0:
+            book = random.choice(data["items"])
+            info = book["volumeInfo"]
+
+            title = info.get("title", "Unknown Title")
+            authors = ", ".join(info.get("authors", ["Unknown Author"]))
+            description = info.get("description", "No description available.")
+            thumbnail = info.get("imageLinks", {}).get("thumbnail", None)
+
+            st.markdown("---")
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                if thumbnail:
+                    st.image(thumbnail, use_container_width=True)
+            with col2:
+                st.markdown(f"**{title}**")
+                st.write(f"by {authors}")
+                st.caption(description[:200] + "..." if len(description) > 200 else description)
+        else:
+            st.error("Couldn't find a book for that genre, try another one.")
