@@ -9,7 +9,7 @@ st.set_page_config(
 
 books_data = {
     "Fantasy": [
-        {"title": "", "author": "", "description": ""},
+        {"Caraval": "", "Stephanie Garber": "", "Caraval by Stephanie Garber is a young adult fantasy novel about two sisters who enter a magical, immersive game where reality and illusion blur": ""},
         {"title": "", "author": "", "description": ""},
         {"title": "", "author": "", "description": ""},
         {"title": "", "author": "", "description": ""},
