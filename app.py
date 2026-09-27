@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import time
 
 st.set_page_config(
     page_title="bkwm",
@@ -9,12 +10,12 @@ st.set_page_config(
 
 books_data = {
     "Fantasy": [
-    {"title": "Caraval", "author": "Stephanie Garber", "description": "A young adult fantasy novel about two sisters who enter a magical, immersive game where reality and illusion blur"},
-    {"title": "Fourth Wing", "author": "Rebecca Yarros", "description": "A brutal war college for aspiring dragon riders where a fragile newcomer must survive lethal trials and a dangerous, magnetic rival."},
-    {"title": "Once Upon a Broken Heart", "author": "Stephanie Garber", "description": "Evangeline Fox strikes a bargain with the charismatic, wicked Prince of Hearts. It features the same magical, circus-like wonder and high-stakes curses."},
-    {"title": "Powerless", "author": "Lauren Roberts", "description": "An ordinary girl without magical powers must fake her abilities to survive a deadly royal competition while hiding her identity from the prince sworn to hunt her kind"},
-    {"title": "The Cruel Prince", "author": "Holly Black", "description": "A dark fantasy novel about a human girl named Jude who fights for power and survival in the lethal, magical Court of Faerie after her parents are murdered."},
-],
+        {"title": "Caraval", "author": "Stephanie Garber", "description": "A young adult fantasy novel about two sisters who enter a magical, immersive game where reality and illusion blur"},
+        {"title": "Fourth Wing", "author": "Rebecca Yarros", "description": "A brutal war college for aspiring dragon riders where a fragile newcomer must survive lethal trials and a dangerous, magnetic rival."},
+        {"title": "Once Upon a Broken Heart", "author": "Stephanie Garber", "description": "Evangeline Fox strikes a bargain with the charismatic, wicked Prince of Hearts. It features the same magical, circus-like wonder and high-stakes curses."},
+        {"title": "Powerless", "author": "Lauren Roberts", "description": "An ordinary girl without magical powers must fake her abilities to survive a deadly royal competition while hiding her identity from the prince sworn to hunt her kind"},
+        {"title": "The Cruel Prince", "author": "Holly Black", "description": "A dark fantasy novel about a human girl named Jude who fights for power and survival in the lethal, magical Court of Faerie after her parents are murdered."},
+    ],
     "Mystery": [
         {"title": "", "author": "", "description": ""},
         {"title": "", "author": "", "description": ""},
@@ -73,9 +74,12 @@ else:
     )
 
     if st.button("Suggest a book"):
-        book = random.choice(books_data[genre])
+        with st.spinner("Finding your next book..."):
+            time.sleep(1.5)
+            filled_books = [b for b in books_data[genre] if b["title"]]
 
-        if book["title"]:
+        if filled_books:
+            book = random.choice(filled_books)
             st.markdown("---")
             st.markdown(f"**{book['title']}**")
             st.write(f"by {book['author']}")
